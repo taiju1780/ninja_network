@@ -230,13 +230,13 @@
       <HintPath>C:\Users\1701315\Desktop\2019.2.6f1\Editor\Data\Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/1701315/Desktop/network-master/network-master/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/1701315/Desktop/ninja_network/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/1701315/Desktop/network-master/network-master/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/1701315/Desktop/ninja_network/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/1701315/Desktop/network-master/network-master/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/1701315/Desktop/ninja_network/BattleRoyale/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Users\1701315\Desktop\2019.2.6f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -665,9 +665,11 @@
   <ItemGroup>
     <Compile Include="Assets\ChangeColliderSize.cs" />
     <Compile Include="Assets\kogataiju\Camera\cameraControll.cs" />
+    <Compile Include="Assets\kogataiju\Camera\cameraCtr.cs" />
     <Compile Include="Assets\kogataiju\GameScene\GameToTitle.cs" />
     <Compile Include="Assets\kogataiju\Pause\PauseGame.cs" />
     <Compile Include="Assets\kogataiju\Player\Move.cs" />
+    <Compile Include="Assets\kogataiju\Player\player.cs" />
     <Compile Include="Assets\kogataiju\SceneChange\Titlescene.cs" />
     <Compile Include="Assets\miku\Script\AnimMng.cs" />
     <Compile Include="Assets\miku\Script\SingletonMonoBehaviour.cs" />
