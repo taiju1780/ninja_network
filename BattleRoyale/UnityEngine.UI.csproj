@@ -698,6 +698,7 @@
     <Compile Include="Packages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Shadow.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\kogataiju\shader\toon.shader" />
     <None Include="Packages\com.unity.2d.sprite\Editor\UI\SpriteEditor\PolygonChangeShapeWindow.uxml" />
     <None Include="Packages\com.unity.2d.sprite\Editor\UI\SpriteEditor\SpriteEditor.uss" />
     <None Include="Packages\com.unity.2d.sprite\Editor\UI\SpriteEditor\SpriteFrameModuleInspector.uxml" />

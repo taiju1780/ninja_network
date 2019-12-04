@@ -29,33 +29,17 @@ public class player : MonoBehaviour
             {
                 speedz = 1;
             }
-            else if (Input.GetKey("left shift") && Input.GetKey("w"))
-            {
-                speedz = 2;
-            }
             if (Input.GetKey("s"))
             {
                 speedz = -1;
-            }
-            else if (Input.GetKey("left shift") && Input.GetKey("s"))
-            {
-                speedz = -2;
             }
             if (Input.GetKey("d"))
             {
                 speedx = 1;
             }
-            else if (Input.GetKey("left shift") && Input.GetKey("d"))
-            {
-                speedx = 2;
-            }
             if (Input.GetKey("a"))
             {
                 speedx = -1;
-            }
-            else if (Input.GetKey("left shift") && Input.GetKey("d"))
-            {
-                speedx = -2;
             }
 
             if (Input.GetKey("left shift"))
@@ -67,11 +51,11 @@ public class player : MonoBehaviour
                 speed = 6;
             }
 
-            float X_Rotation = Input.GetAxis("Mouse X");
             float Y_Rotation = Input.GetAxis("Mouse Y");
-
-            transform.Rotate(0, -X_Rotation, 0);
             transform.Rotate(-Y_Rotation, 0, 0);
+
+            float X_Rotation = Input.GetAxis("Mouse X");
+            transform.Rotate(0, -X_Rotation, 0);
 
             moveDir = new Vector3(speedx, speedy, speedz);
 
@@ -83,7 +67,6 @@ public class player : MonoBehaviour
             {
                 moveDir.y = 3;
             }
-
         }
 
         //重力
