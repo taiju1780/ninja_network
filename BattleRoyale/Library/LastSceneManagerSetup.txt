@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/kogataiju/PlayerScene.unity
+- path: Assets/kogataiju/test.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

@@ -8,6 +8,7 @@ public class player : MonoBehaviour
     private Vector3 moveDir;
     private int gravity = 6;
     [SerializeField] private float speed = 0;
+    [SerializeField] GameObject camera;
 
     float speedy = 0;
 
@@ -22,6 +23,12 @@ public class player : MonoBehaviour
     void Update()
     {
         float speedx = 0f, speedz = 0f;
+
+        Vector3 up = new Vector3(0, 1, 0);
+        Vector3 ray = camera.transform.forward;
+        Vector3 right = Vector3.Cross(up, ray);
+
+        Vector3 upper = Vector3.Cross(ray, right);
 
         if (charaCon.isGrounded)
         {
@@ -52,10 +59,10 @@ public class player : MonoBehaviour
             }
 
             float Y_Rotation = Input.GetAxis("Mouse Y");
-            transform.Rotate(-Y_Rotation, 0, 0);
+            transform.Rotate(right, -Y_Rotation);
 
             float X_Rotation = Input.GetAxis("Mouse X");
-            transform.Rotate(0, -X_Rotation, 0);
+            transform.Rotate(upper, -X_Rotation);
 
             moveDir = new Vector3(speedx, speedy, speedz);
 
