@@ -664,6 +664,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ChangeColliderSize.cs" />
+    <Compile Include="Assets\Dissolve Edge by Moonflower Carnivore\Scripts\HideIfDisabledDrawer.cs" />
     <Compile Include="Assets\kogataiju\Camera\cameraControll.cs" />
     <Compile Include="Assets\kogataiju\Camera\cameraCtr.cs" />
     <Compile Include="Assets\kogataiju\GameScene\GameToTitle.cs" />
@@ -680,6 +681,9 @@
     <Compile Include="Assets\Scenes\TestPrehub\FadeControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Dissolve Edge by Moonflower Carnivore\Shaders\Transparent_Unlit_DissolveEdge.shader" />
+    <None Include="Assets\Dissolve Edge by Moonflower Carnivore\readme_DissolveEdge.txt" />
+    <None Include="Assets\kogataiju\shader\dissolve.shader" />
     <None Include="Assets\kogataiju\shader\toon.shader" />
     <None Include="Packages\com.unity.2d.sprite\Editor\UI\SpriteEditor\PolygonChangeShapeWindow.uxml" />
     <None Include="Packages\com.unity.2d.sprite\Editor\UI\SpriteEditor\SpriteEditor.uss" />
