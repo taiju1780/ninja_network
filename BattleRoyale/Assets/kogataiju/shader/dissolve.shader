@@ -3,7 +3,7 @@
     Properties
     {
         _MainTex ("MainTex", 2D) = "white" {}
-        _Dissolve ("Dissolve", 2D) = "white" {}
+        _DissolveTex ("Dissolve", 2D) = "white" {}
 		_Influence("Influence",Range(0,1)) = 0;
 		[ENUM(Off, 0, Front, 1, Back, 2)] _CullMode("Culling Mode", int) = 0;
 		[ENUM(Off, 0, On, 1)] _ZWrite("ZWrite", int) = 0;
@@ -19,6 +19,47 @@
 			ZWrite[_ZWrite];
 
 			CGPROGRAM
+
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma shader_featuer EDGE_COLOR
+
+			#include "UnityCG.cginc"
+
+			struct appdata 
+			{
+				float4 vert : POSITION;
+				float2 uv : TEXCOORD0;
+				fixed4 color : COLOR;
+			};
+
+			struct v2f 
+			{
+				float2 uv : TEXCOORD0;
+				float2 uv3 : TEXCOORD3;
+				float4 vertex : SV_POSITION;
+				fixed4 color : COLOR;
+			};
+
+			sampler2D _MainTex;
+			sampler2D _DissolveTex;
+			float4 _MainTex_ST;
+			float4 _DissolveTex_ST;
+			fixed _Edge;
+			fixed _Influence;
+
+			#ifdef EDGE_COLOR
+				sampler2D _EdgeAroundRamp;
+				fixed _EdgeAround;
+				float _EdgeAroundPower;
+				float _EdgeAroundHDR;
+				float _EdgeDistorsion;
+			#endif
+
+			v2f vert(appdata v) {
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+			}
 		}
 
         CGPROGRAM
