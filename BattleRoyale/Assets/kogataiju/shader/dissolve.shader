@@ -59,6 +59,43 @@
 			v2f vert(appdata v) {
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv3 = TRANSFORM_TEX(v.uv3, _DissolveTex);
+				o.color = v.color;
+				o.color.a *= _Influence;
+				return o;
+			}
+
+			fixed4 frag(v2f v) : SV_Target
+			{
+				fixed4 color Tex2D(_DissolveTex,v.uv3);
+				fixed x = cor.r;
+				fixed influence = v.cor.a;
+
+				//Edge
+				fixed edge = lerp(x + _Edge, x - _Edge, influence);
+				fixed alpha = smoothstep(_Influence + _Edge, _Influence - _Edge, edge);
+
+				#ifdef EDGE_COLOR
+					//エッジ周りの影響度
+					fixed edgearound = lerp(x + _EdgeAround, x - _EdgeAround, _Influence);
+					edgearound = smoothstep(_Influence + _EdgeAround, _Influence - _EdgeAround, edgearound);
+					edgearound = pow(edgearound, _EdgeAroundPower);
+
+					//エッジ周りの歪み
+					fixed avoid = 0.15f;
+					fixed distort = edgearound * alpha * avoid;
+					float2 cuv = lerp(i.uv, i.uv + distort - avoid, influence * _EdgeDistorsion);
+					col = tex2D(_MainTex, cuv);
+					col.rgb *= i.color.rgb;
+
+					//エッジ周りの色
+					fixed3 ca = tex2D(_EdgeAroundRamp, fixed2(1 - edgearound, 0)).rgb;
+					ca = (col.rgb + ca) * ca * _EdgeAroundHDR;
+					col.rgb = lerp(ca, col.rgb, edgearound);
+				#else
+					col = Tex2D(_MainTex, i.uv);
+					col.rgb *= i.color.rgb;
 			}
 		}
 
