@@ -24,12 +24,6 @@ public class player : MonoBehaviour
     {
         float speedx = 0f, speedz = 0f;
 
-        Vector3 up = new Vector3(0, 1, 0);
-        Vector3 ray = camera.transform.forward;
-        Vector3 right = Vector3.Cross(up, ray);
-
-        Vector3 upper = Vector3.Cross(ray, right);
-
         if (charaCon.isGrounded)
         {
             if (Input.GetKey("w"))
@@ -58,11 +52,28 @@ public class player : MonoBehaviour
                 speed = 6;
             }
 
-            float Y_Rotation = Input.GetAxis("Mouse Y");
-            transform.Rotate(right, -Y_Rotation);
+            var _inputX = Input.GetAxis("Mouse X");
+            var _inputY = Input.GetAxis("Mouse Y");
 
-            float X_Rotation = Input.GetAxis("Mouse X");
-            transform.Rotate(upper, -X_Rotation);
+            float maxLimit = 60, minLimit = 360 - maxLimit;
+
+            //X軸回転
+            var localAngle = transform.localEulerAngles;
+
+            localAngle.x -= _inputY;
+
+            if (localAngle.x > maxLimit && localAngle.x < 180)
+                localAngle.x = maxLimit;
+
+            if (localAngle.x < minLimit && localAngle.x > 180)
+                localAngle.x = minLimit;
+
+            transform.localEulerAngles = localAngle;
+
+            //Y軸回転
+            var angle = transform.eulerAngles;
+            angle.y -= _inputX;
+            transform.eulerAngles = angle;
 
             moveDir = new Vector3(speedx, speedy, speedz);
 

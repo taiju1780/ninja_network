@@ -12,6 +12,11 @@ public class cameraControll : MonoBehaviour
     public Transform verRot;
     public Transform horRot;
 
+    private float zoom;
+    private float view;
+
+    private Camera cam;
+
     [SerializeField] private float Y_Rotation;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +24,8 @@ public class cameraControll : MonoBehaviour
         verRot = transform.parent;
         horRot = GetComponent<Transform>();
         offset = transform.position - transform.parent.position;
-        
+        cam = GetComponent<Camera>();
+        view = cam.fieldOfView;
     }
 
     // Update is called once per frame
@@ -30,15 +36,31 @@ public class cameraControll : MonoBehaviour
             return;
         }
 
+        cam.fieldOfView = view + zoom;
+
+        if(cam.fieldOfView > 10.0f)
+        {
+            cam.fieldOfView = 10.0f;
+        }
+
+        if(cam.fieldOfView < 60.0f)
+        {
+            cam.fieldOfView = 60.0f;
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            zoom -= 0.3f;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            zoom += 0.3f;
+        }
+        
+
         float X_Rotation = Input.GetAxis("Mouse X");
         Y_Rotation = Input.GetAxis("Mouse Y");
-
-        Matrix4x4 mat;
-        mat = Matrix4x4.identity;
-        mat.SetTRS(transform.position, transform.rotation, new Vector3(1, 1, 1));
-
-
-        offset.y = offset.y + Y_Rotation / 100;
+        
         //transform.position = player.transform.position + offset; 
         transform.position = transform.parent.position + offset; 
 

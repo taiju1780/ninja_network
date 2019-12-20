@@ -1,12 +1,13 @@
-﻿Shader "Custom/dissolve"
+﻿Shader "dissolve"
 {
     Properties
     {
         _MainTex ("MainTex", 2D) = "white" {}
         _DissolveTex ("Dissolve", 2D) = "white" {}
-		_Influence("Influence",Range(0,1)) = 0;
-		[ENUM(Off, 0, Front, 1, Back, 2)] _CullMode("Culling Mode", int) = 0;
-		[ENUM(Off, 0, On, 1)] _ZWrite("ZWrite", int) = 0;
+		_Influence("Influence",Range(0,1)) = 0
+		[ENUM(Off, 0, Front, 1, Back, 2)] _CullMode("Culling Mode", int) = 0
+		[ENUM(Off, 0, On, 1)] _ZWrite("ZWrite", int) = 0
+		_Edge("Edge",Range(0,1)) = 0
 	}
 		SubShader
 	{
@@ -14,15 +15,15 @@
 
 		Pass{
 			Blend SrcAlpha OneMinusSrcAlpha //Alpha
-			Cull(_CullMode);
-			Lighting Off;
-			ZWrite[_ZWrite];
+			Cull[_CullMode]
+			Lighting Off
+			ZWrite[_ZWrite]
 
 			CGPROGRAM
 
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma shader_featuer EDGE_COLOR
+			#pragma shader_feature EDGE_COLOR
 
 			#include "UnityCG.cginc"
 
@@ -58,9 +59,9 @@
 
 			v2f vert(appdata v) {
 				v2f o;
-				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vert);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.uv3 = TRANSFORM_TEX(v.uv3, _DissolveTex);
+				o.uv3 = TRANSFORM_TEX(v.uv, _DissolveTex);
 				o.color = v.color;
 				o.color.a *= _Influence;
 				return o;
@@ -68,9 +69,9 @@
 
 			fixed4 frag(v2f v) : SV_Target
 			{
-				fixed4 color Tex2D(_DissolveTex,v.uv3);
-				fixed x = cor.r;
-				fixed influence = v.cor.a;
+				fixed4 col = tex2D(_DissolveTex,v.uv3);
+				fixed x = col.r;
+				fixed influence = v.color.a;
 
 				//Edge
 				fixed edge = lerp(x + _Edge, x - _Edge, influence);
@@ -94,47 +95,14 @@
 					ca = (col.rgb + ca) * ca * _EdgeAroundHDR;
 					col.rgb = lerp(ca, col.rgb, edgearound);
 				#else
-					col = Tex2D(_MainTex, i.uv);
-					col.rgb *= i.color.rgb;
+					col = tex2D(_MainTex, v.uv);
+					col.rgb *= v.color.rgb;
+				#endif
+					col.a *= alpha;
+
+				return col;
 			}
+			ENDCG
 		}
-
-        CGPROGRAM
-        // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
-
-        // Use shader model 3.0 target, to get nicer looking lighting
-        #pragma target 3.0
-
-        sampler2D _MainTex;
-
-        struct Input
-        {
-            float2 uv_MainTex;
-        };
-
-        half _Glossiness;
-        half _Metallic;
-        fixed4 _Color;
-
-        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-        // #pragma instancing_options assumeuniformscaling
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
-        void surf (Input IN, inout SurfaceOutputStandard o)
-        {
-            // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
-            // Metallic and smoothness come from slider variables
-            o.Metallic = _Metallic;
-            o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
-        }
-        ENDCG
     }
-    FallBack "Diffuse"
 }

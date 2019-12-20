@@ -32,33 +32,17 @@ public class Move : MonoBehaviour
             {
                 speedz = 1;
             }
-            else if (Input.GetKey("left shift") && Input.GetKey("w"))
-            {
-                speedz = 2;
-            }
             if (Input.GetKey("s"))
             {
                 speedz = -1;
-            }
-            else if (Input.GetKey("left shift") && Input.GetKey("s"))
-            {
-                speedz = -2;
             }
             if (Input.GetKey("d"))
             {
                 speedx = 1;
             }
-            else if (Input.GetKey("left shift") && Input.GetKey("d"))
-            {
-                speedx = 2;
-            }
             if (Input.GetKey("a"))
             {
                 speedx = -1;
-            }
-            else if (Input.GetKey("left shift") && Input.GetKey("d"))
-            {
-                speedx = -2;
             }
 
             if(Input.GetKey("left shift"))
